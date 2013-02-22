@@ -22,7 +22,7 @@
 #ifndef DOWNSAMPLER_H
 #define DOWNSAMPLER_H
 
-#include <cmath>
+#include <math.h>
 #include <vector>
 #include "audiodata.h"
 #include "lowpassfilterfactory.h"

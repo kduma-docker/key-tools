@@ -22,7 +22,7 @@
 #ifndef LOWPASSFILTER_H
 #define LOWPASSFILTER_H
 
-#include <cmath>
+#include <math.h>
 #include <vector>
 #include "fftadapter.h"
 #include "windowfunctions.h"

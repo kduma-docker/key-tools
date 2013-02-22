@@ -22,9 +22,8 @@
 #ifndef PARAMETERS_H
 #define PARAMETERS_H
 
-#include <cmath>
+#include <math.h>
 #include <vector>
-#include <boost/math/special_functions/fpclassify.hpp>
 #include "constants.h"
 #include "exception.h"
 

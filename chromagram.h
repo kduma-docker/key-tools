@@ -22,9 +22,8 @@
 #ifndef CHROMAGRAM_H
 #define CHROMAGRAM_H
 
-#include <boost/math/special_functions/fpclassify.hpp>
+#include <math.h>
 #include <vector>
-#include <cmath>
 #include "parameters.h"
 
 namespace KeyFinder{

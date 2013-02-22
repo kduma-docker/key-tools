@@ -60,7 +60,7 @@ namespace KeyFinder{
       ss << "Cannot set magnitude of out-of-bounds bin (" << b << "/" << bins << ")";
       throw Exception(ss.str().c_str());
     }
-    if(!boost::math::isfinite(val)){
+    if(!isfinite(val)){
       throw Exception("Cannot set magnitude to NaN");
     }
     chromaData[h][b] = val;

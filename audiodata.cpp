@@ -58,7 +58,7 @@ namespace KeyFinder{
       ss << "Cannot set out-of-bounds sample (" << n << "/" << sampleCount << ")";
       throw Exception(ss.str().c_str());
     }
-    if(!boost::math::isfinite(x)){
+    if(!isfinite(x)){
       throw Exception("Cannot set sample to NaN");
     }
     samples[n] = x;
