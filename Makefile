@@ -5,18 +5,26 @@ CFLAGS += -Wall
 
 # Ibrahim's KeyFinder library
 
-LIB = audiodata.o chromagram.o chromatransform.o chromatransformfactory.o \
-	downsampler.o fftadapter.o keyclassifier.o keyfinder.o \
-	lowpassfilter.o lowpassfilterfactory.o parameters.o seg.o \
-	segarbitrary.o segcosine.o segnone.o spectrumanalyser.o \
-	toneprofiles.o windowfunctions.o
+KEYFINDER = keyfinder/audiodata.o keyfinder/chromagram.o \
+	keyfinder/chromatransform.o keyfinder/chromatransformfactory.o \
+	keyfinder/downsampler.o keyfinder/fftadapter.o \
+	keyfinder/keyclassifier.o keyfinder/keyfinder.o \
+	keyfinder/lowpassfilter.o keyfinder/lowpassfilterfactory.o \
+	keyfinder/parameters.o keyfinder/seg.o keyfinder/segarbitrary.o \
+	keyfinder/segcosine.o keyfinder/segnone.o \
+	keyfinder/spectrumanalyser.o keyfinder/toneprofiles.o \
+	keyfinder/windowfunctions.o
 
 LDLIBS += -lstdc++ -lfftw3 -lm
 LDFLAGS +=  -Wl,--gc-sections
 
-key:	key.o ckey.o $(LIB)
+key:	key.o ckey.o $(KEYFINDER)
+
+ckey.o:	CPPFLAGS += -Ikeyfinder
+
+keyfinder/%.o:	CPPFLAGS += -Ikeyfinder
 
 clean:
-	rm -f *.o *.d key
+	rm -f *.d */*.d ckey.o key.o $(KEYFINDER) key
 
--include *.d
+-include *.d keyfinder/*.d
