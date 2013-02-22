@@ -22,7 +22,6 @@
 #ifndef LOWPASSFILTERFACTORY_H
 #define LOWPASSFILTERFACTORY_H
 
-#include <boost/thread/mutex.hpp>
 #include <vector>
 #include "lowpassfilter.h"
 #include "parameters.h"
@@ -53,7 +52,6 @@ namespace KeyFinder{
     LowPassFilter* getLowPassFilter(unsigned int, unsigned int, float, unsigned int);
   private:
     std::vector<LowPassFilterWrapper*> filters;
-    boost::mutex LowPassFilterFactoryMutex;
   };
 
 }

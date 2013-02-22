@@ -55,7 +55,6 @@ namespace KeyFinder{
   }
 
   ChromaTransform* ChromaTransformFactory::getChromaTransform(unsigned int f, const Parameters& p){
-    boost::mutex::scoped_lock lock(chromaTransformFactoryMutex);
     for (unsigned int i=0; i<chromaTransforms.size(); i++){
       ChromaTransformWrapper* wrapper = chromaTransforms[i];
       if(
