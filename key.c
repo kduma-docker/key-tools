@@ -10,6 +10,7 @@ int main(int argc, char *argv[])
 {
 	void *ckey;
 	int key;
+	const char *name;
 
 	ckey = ckey_init(RATE, 1);
 
@@ -28,8 +29,12 @@ int main(int argc, char *argv[])
 	}
 
 	key = ckey_analyse(ckey);
+	name = ckey_to_position(key);
 
-	printf("%d\n", key);
+	if (name == NULL)
+		return -1;
+
+	puts(name);
 
 	return 0;
 }
