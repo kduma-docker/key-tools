@@ -1,0 +1,112 @@
+#!/bin/sh
+#
+# Analyse an audio file and add key metadata
+#
+
+set -e
+
+usage()
+{
+	cat <<END
+key-tag (C) Copyright 2012 Mark Hills <mark@xwax.org>
+
+Usage: key-tag [options] <file>
+Tag an audio file with key
+
+  -f   Overwrite an existing key in the file tags
+  -t   Output the traditional key instead of position on circle of fifths
+  -n   Display key only, don't tag
+  -h   Display this help message and exit
+
+END
+}
+
+# Parse command line arguments
+
+FORCE=false
+WRITE=true
+ARGS=""
+
+while getopts "fnth" OPT; do
+	case "$OPT" in
+	f)
+		FORCE=true
+		;;
+	n)
+		WRITE=false
+		;;
+	t)
+		ARGS="$ARGS -t"
+		;;
+	h)
+		usage
+		exit 0
+		;;
+	?)
+		exit 1
+	esac
+done
+shift $((OPTIND - 1))
+
+if [ -z "$1" ]; then
+	usage >&2
+	exit 1
+fi
+
+set -u
+
+FILE="$1"
+shift
+
+# Don't overwrite an existing KEY tag
+
+case "$FILE" in
+*.flac)
+	KEY=`metaflac --show-tag=KEY "$FILE" | sed -e 's/KEY=//'`
+	;;
+*.mp3)
+	KEY=`id3v2 -R "$FILE" | sed -n 's/^TKEY.*: \([0-9\.]\+\)/\1/p'`
+	;;
+*.ogg)
+	KEY=`vorbiscomment "$FILE" | sed -n 's/^KEY=//p'`
+	;;
+*)
+	echo "$FILE: file extension not known" >&2
+	exit 1
+	;;
+esac
+
+if [ -n "$KEY" ] && ! $FORCE; then
+	echo "$FILE: already tagged, $KEY KEY" >&2
+	exit 1
+fi
+
+# Analyse the key
+
+KEY=`sox -V1 "$FILE" -r 44100 -e float -c 1 -t raw - | key $ARGS`
+if [ -z "$KEY" ]; then
+	exit 1
+fi
+
+echo "$FILE: $KEY" >&2
+
+if ! $WRITE; then
+	exit 0
+fi
+
+# Write the key to a tag
+
+case "$FILE" in
+*.flac)
+	metaflac --remove-tag=KEY --set-tag="KEY=$KEY" "$FILE"
+	;;
+*.mp3)
+	id3v2 --TKEY "$KEY" "$FILE"
+	;;
+*.ogg)
+	vorbiscomment -at "KEY=$KEY" "$FILE"
+	;;
+*)
+	echo "$FILE: don't know how to tag this type of file" >&2
+	exit 1
+esac
