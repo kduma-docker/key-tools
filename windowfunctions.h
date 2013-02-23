@@ -29,6 +29,7 @@ namespace KeyFinder{
 
   class WindowFunction{
   public:
+    virtual ~WindowFunction() {};
     static WindowFunction* getWindowFunction(temporal_window_t);
     virtual float window(int, int) const = 0;
   };
