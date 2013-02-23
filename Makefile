@@ -1,5 +1,10 @@
 -include .config
 
+PREFIX ?= /usr/local
+INSTALL ?= install
+
+BINDIR ?= $(PREFIX)/bin
+
 CXXFLAGS += -Wall -ffunction-sections -fdata-sections -MMD
 CFLAGS += -Wall
 
@@ -18,11 +23,22 @@ KEYFINDER = keyfinder/audiodata.o keyfinder/chromagram.o \
 LDLIBS += -lstdc++ -lfftw3 -lm
 LDFLAGS +=  -Wl,--gc-sections
 
+.PHONY:	clean install dist
+
 key:	key.o ckey.o $(KEYFINDER)
 
 ckey.o:	CPPFLAGS += -Ikeyfinder
 
 keyfinder/%.o:	CPPFLAGS += -Ikeyfinder
+
+install:
+	$(INSTALL) -d $(DESTDIR)$(BINDIR)
+	$(INSTALL) -t $(DESTDIR)$(BINDIR) key key-tag
+
+dist:
+	mkdir -p dist
+	V=$$(git describe) && git archive --prefix=key-tools-$$V/ HEAD \
+		| gzip > dist/key-tools-$$V.tar.gz
 
 clean:
 	rm -f *.d */*.d ckey.o key.o $(KEYFINDER) key
