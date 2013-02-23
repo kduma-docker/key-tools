@@ -5,7 +5,8 @@ INSTALL ?= install
 
 BINDIR ?= $(PREFIX)/bin
 
-CXXFLAGS += -Wall -ffunction-sections -fdata-sections -MMD
+OPTFLAGS ?= -O3
+CXXFLAGS += -Wall -ffunction-sections -fdata-sections -MMD $(OPTFLAGS)
 CFLAGS += -Wall
 
 # Ibrahim's KeyFinder library
