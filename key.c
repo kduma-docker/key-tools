@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
 	}
 
 	if (name == NULL)
-		return -1;
+		return EX_UNAVAILABLE;
 
 	puts(name);
 
