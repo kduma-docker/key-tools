@@ -5,8 +5,8 @@ INSTALL ?= install
 
 BINDIR ?= $(PREFIX)/bin
 
-OPTFLAGS ?= -O3
-CXXFLAGS += -Wall -ffunction-sections -fdata-sections -MMD $(OPTFLAGS)
+CXXFLAGS ?= -O3
+CXXFLAGS += -Wall -MMD
 CFLAGS += -Wall
 
 # Ibrahim's KeyFinder library
@@ -22,7 +22,6 @@ KEYFINDER = keyfinder/audiodata.o keyfinder/chromagram.o \
 	keyfinder/windowfunctions.o
 
 LDLIBS += -lstdc++ -lfftw3 -lm
-LDFLAGS +=  -Wl,--gc-sections
 
 .PHONY:	clean install dist
 
