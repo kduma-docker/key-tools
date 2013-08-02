@@ -29,7 +29,7 @@ void usage(FILE *f)
 		"harmonic mixing. If specified, the traditional key name can be output in\n"
 	        "an ASCII notation (b: flat; #: sharp; m: minor) eg. 'Abm', 'F#'\n\n");
 
-	fprintf(f, "This program is based on the work of Ibrahim Sha'ath.\n");
+	fprintf(f, "The key detection used by this program is the work of Ibrahim Sha'ath.\n");
 }
 
 int main(int argc, char *argv[])
