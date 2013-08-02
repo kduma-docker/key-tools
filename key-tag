@@ -8,7 +8,7 @@ set -e
 usage()
 {
 	cat <<END
-key-tag (C) Copyright 2012 Mark Hills <mark@xwax.org>
+key-tag (C) Copyright 2013 Mark Hills <mark@xwax.org>
 
 Usage: key-tag [options] <file>
 Tag an audio file with key
