@@ -11,7 +11,7 @@ usage()
 key-tag (C) Copyright 2013 Mark Hills <mark@xwax.org>
 
 Usage: key-tag [options] <file>
-Tag an audio file with key
+Tag an audio file with musical key
 
   -f   Overwrite an existing key in the file tags
   -t   Output the traditional key instead of position on circle of fifths
